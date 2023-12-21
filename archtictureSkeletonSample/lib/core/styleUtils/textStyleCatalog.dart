@@ -1,0 +1,19 @@
+import 'package:archtictureskeletonsample/core/styleUtils/colorCatalog.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+abstract class TextStyleCatalog{
+
+    static TextStyle titleTextStyle=TextStyle(
+        color:ColorsCatalog.whiteTextColor,
+        fontSize: 32.sp,
+        fontWeight: FontWeight.w500,
+        height: 0,
+    );
+    static TextStyle buttonTextStyle=TextStyle(
+        color: Colors.white,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        height: 0,
+    );
+}
