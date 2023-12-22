@@ -18,6 +18,10 @@ class LoginScreenErrorState extends LoginScreenState{
 
 }
 
+class LoginSuccessState extends LoginScreenState {
+  LoginSuccessState();
+}
+
 class LoginScreenNotifyUiState extends LoginScreenState {
   LoginScreenNotifyUiState();
 

@@ -16,4 +16,17 @@ abstract class TextStyleCatalog{
         fontWeight: FontWeight.w500,
         height: 0,
     );
+
+    static TextStyle smallTitleStyle=TextStyle(
+    color:ColorsCatalog.whiteTextColor,
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w500,
+    height: 0,
+    );
+    static TextStyle smallLabelStyle=TextStyle(
+        color:ColorsCatalog.whiteTextColor,
+        fontSize: 12.sp,
+        fontFamily: 'Bahij TheSansArabic',
+        fontWeight: FontWeight.w500,
+    );
 }

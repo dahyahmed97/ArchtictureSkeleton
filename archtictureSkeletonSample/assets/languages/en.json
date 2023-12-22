@@ -1,4 +1,7 @@
 {
   "welcomeText": "Welcome !",
-  "welcomeSubtitle": "Log in to the Employees’ Vacations System"
+  "welcomeSubtitle": "Log in to the Employees’ Vacations System",
+  "faceIdText": "Log in with Your Face ID",
+  "username": "Username",
+  "password": "Password"
 }

@@ -1,4 +1,5 @@
 import 'package:archtictureskeletonsample/core/commonWidgets/CustomTextField.dart';
+import 'package:archtictureskeletonsample/core/commonWidgets/loading_widget.dart';
 import 'package:archtictureskeletonsample/core/localization/localization.dart';
 import 'package:archtictureskeletonsample/core/styleUtils/assetCatalog.dart';
 import 'package:archtictureskeletonsample/core/styleUtils/textStyleCatalog.dart';
@@ -7,8 +8,10 @@ import 'package:archtictureskeletonsample/features/auth/login/viewModel/login_sc
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/commonWidgets/customButton.dart';
+import '../../../core/commonWidgets/seperator_widget.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -20,8 +23,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
-  TextEditingController _usernameTextEditingController=TextEditingController();
-  TextEditingController _passwordTextEditingController=TextEditingController();
+  final TextEditingController _usernameTextEditingController=TextEditingController();
+  final TextEditingController _passwordTextEditingController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: BlocConsumer<LoginScreenViewModel,LoginScreenState>(
           builder: (context,state){
             if(state is LoginScreenLoadingState){
-              return Text("loading");
+              return const LoadingWidget();
             }else{
               return SafeArea(
                 bottom: false,
@@ -46,8 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 50.h,),
 
                       Container(
-                        width: MediaQuery.of(context).size.width,
-                        height:  MediaQuery.of(context).size.height,
+
                         padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
                         decoration: ShapeDecoration(
                           color: Colors.white.withOpacity(0.2199999988079071),
@@ -68,23 +70,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         child: Column(
                           children: [
-                            SizedBox(height: 60.h,),
+                            SizedBox(height: 40.h,),
                             Text(AppLocalizations.of(context)!.translate("welcomeText"),
                               style: TextStyleCatalog.titleTextStyle,),
                             SizedBox(height: 10.h,),
                             Text(AppLocalizations.of(context)!.translate("welcomeSubtitle"),
                               style: TextStyleCatalog.titleTextStyle.copyWith(fontSize: 18.sp),),
-                            SizedBox(height: 85.h,),
+                            SizedBox(height: 55.h,),
                             CustomTextFormField(
-                                str: "Username",
-                                suffixIcon: Container(width: 0,height: 0,),
+                                str: AppLocalizations.of(context)!.translate("username"),
+                                suffixIcon: const SizedBox(width: 0,height: 0,),
                               controller: _usernameTextEditingController,
                             ),
                             SizedBox(height: 60.h,),
                             CustomTextFormField(
-                              str: "Password",
+                              str: AppLocalizations.of(context)!.translate("password"),
                               isPassword: true,
-                              suffixIcon: Container(width: 0,height: 0,),
+                              suffixIcon: const SizedBox(width: 0,height: 0,),
                               controller: _passwordTextEditingController,
                             ),
                             SizedBox(height: 60.h,),
@@ -94,7 +96,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                 onClick: () {  },
                                 icon: AssetCatalog.arrow,
                                 title: 'Login',),
-                            )
+                            ),
+                            SizedBox(height: 50.h,),
+                            const SeparatorWidget(),
+                            SizedBox(height: 25.h,),
+                            Text(
+                              AppLocalizations.of(context)!.translate("faceIdText"),
+                              textAlign: TextAlign.center,
+                              style: TextStyleCatalog.smallTitleStyle
+                            ),
+                            SizedBox(height: 8.h,),
+                            SvgPicture.asset(AssetCatalog.faceId),
+                            SizedBox(height: 45.h,),
+                            Text(
+                              'Copyright - Ejada Systems Ltd. 1444 AH - 2023\n Version 1.0.0',
+                              textAlign: TextAlign.center,
+                              style: TextStyleCatalog.smallLabelStyle
+                            ),
+                            SizedBox(height: 50.h,),
+
                           ],
                         ),
                       )
