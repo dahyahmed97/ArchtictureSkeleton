@@ -1,6 +1,8 @@
 
 import 'package:equatable/equatable.dart';
 
+import '../models/login_response_model.dart';
+
 abstract class LoginScreenState  extends Equatable{
  @override
   List<Object?> get props => [];
@@ -19,7 +21,8 @@ class LoginScreenErrorState extends LoginScreenState{
 }
 
 class LoginSuccessState extends LoginScreenState {
-  LoginSuccessState();
+  final LoginResponseModel userData;
+  LoginSuccessState(this.userData);
 }
 
 class LoginScreenNotifyUiState extends LoginScreenState {

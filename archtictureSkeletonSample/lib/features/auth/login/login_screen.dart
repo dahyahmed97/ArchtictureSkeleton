@@ -1,6 +1,7 @@
 import 'package:archtictureskeletonsample/core/commonWidgets/CustomTextField.dart';
 import 'package:archtictureskeletonsample/core/commonWidgets/loading_widget.dart';
 import 'package:archtictureskeletonsample/core/localization/localization.dart';
+import 'package:archtictureskeletonsample/core/navigation/routes_catalog.dart';
 import 'package:archtictureskeletonsample/core/styleUtils/assetCatalog.dart';
 import 'package:archtictureskeletonsample/core/styleUtils/textStyleCatalog.dart';
 import 'package:archtictureskeletonsample/features/auth/login/viewModel/login_screen_state.dart';
@@ -22,7 +23,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameTextEditingController=TextEditingController();
   final TextEditingController _passwordTextEditingController=TextEditingController();
   @override
@@ -77,10 +78,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             Text(AppLocalizations.of(context)!.translate("welcomeSubtitle"),
                               style: TextStyleCatalog.titleTextStyle.copyWith(fontSize: 18.sp),),
                             SizedBox(height: 55.h,),
-                            CustomTextFormField(
-                                str: AppLocalizations.of(context)!.translate("username"),
-                                suffixIcon: const SizedBox(width: 0,height: 0,),
-                              controller: _usernameTextEditingController,
+                            Form(
+                              key:_formKey ,
+                              child: CustomTextFormField(
+                                  str: AppLocalizations.of(context)!.translate("username"),
+                                  suffixIcon: const SizedBox(width: 0,height: 0,),
+                                controller: _usernameTextEditingController,
+                                validate: (String? value){
+                                    return context.read<LoginScreenViewModel>().validateUsername(value!);
+                              },
+                              ),
                             ),
                             SizedBox(height: 60.h,),
                             CustomTextFormField(
@@ -88,12 +95,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               isPassword: true,
                               suffixIcon: const SizedBox(width: 0,height: 0,),
                               controller: _passwordTextEditingController,
+                              validate: (String? value){
+                                return context.read<LoginScreenViewModel>().validatePassword(value!);
+                              },
                             ),
                             SizedBox(height: 60.h,),
                             Padding(
                               padding:  EdgeInsets.symmetric(horizontal: 16.w),
                               child: CustomButton(
-                                onClick: () {  },
+                                onClick: () {
+                                  if(_formKey.currentState!.validate()){
+                                    context.read<LoginScreenViewModel>()
+                                        .performLogin(_usernameTextEditingController.text, _passwordTextEditingController.text);
+                                  }
+                                },
                                 icon: AssetCatalog.arrow,
                                 title: 'Login',),
                             ),
@@ -124,7 +139,13 @@ class _LoginScreenState extends State<LoginScreen> {
               );
             }
           },
-          listener: (context,state){},
+          listener: (context,state){
+            if(state is LoginSuccessState){
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text("Login Success")));
+              Navigator.of(context).pushReplacementNamed(RoutesCatalog.homeScreen,arguments: state.userData);
+            }
+          },
         )
       ),
     );

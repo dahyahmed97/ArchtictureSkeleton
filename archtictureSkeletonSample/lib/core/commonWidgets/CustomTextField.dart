@@ -78,7 +78,7 @@ class CustomTextFormField extends StatelessWidget {
         contentPadding: EdgeInsets.symmetric(vertical: 15.w, horizontal: 10.h),
         errorStyle: TextStyle(
             fontSize: 14.sp, color:Colors.white, fontWeight: FontWeight.w400),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
             color: Colors.white,
           ),
@@ -90,7 +90,7 @@ class CustomTextFormField extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(15.0.r),
         ),
-        border: OutlineInputBorder(
+        border: UnderlineInputBorder(
           borderSide: const BorderSide(
             color: Colors.white,
           ),

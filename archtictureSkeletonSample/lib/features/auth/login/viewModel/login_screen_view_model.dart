@@ -4,6 +4,8 @@ import 'package:archtictureskeletonsample/features/auth/login/models/login_reque
 import 'package:archtictureskeletonsample/features/auth/login/viewModel/login_screen_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/utils/enums.dart';
+
 
 class LoginScreenViewModel extends Cubit<LoginScreenState> {
   final  IRepository _repository;
@@ -17,8 +19,28 @@ class LoginScreenViewModel extends Cubit<LoginScreenState> {
     res.fold((fail) =>{
       emit(LoginScreenErrorState(fail.message))
     }, (response) =>{
-      emit(LoginSuccessState())
+      if(response.code! == ApiResult.success.type){
+        _preferenceManager.saveBearerToken(response.jwtToken!),
+        emit(LoginSuccessState(response))
+      }else{
+        emit(LoginScreenErrorState(response.errorMessageContent!))
+      }
+
     });
 
+  }
+  String? validateUsername(String username){
+    if(username.trim().isNotEmpty){
+      return null;
+    }else{
+      return "please enter valid username";
     }
   }
+  String? validatePassword(String password){
+    if(password.trim().isNotEmpty){
+      return null;
+    }else{
+      return "please enter valid password";
+    }
+  }
+}
