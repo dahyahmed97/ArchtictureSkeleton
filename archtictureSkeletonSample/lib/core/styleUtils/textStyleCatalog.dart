@@ -29,4 +29,5 @@ abstract class TextStyleCatalog{
         fontFamily: 'Bahij TheSansArabic',
         fontWeight: FontWeight.w500,
     );
+
 }
