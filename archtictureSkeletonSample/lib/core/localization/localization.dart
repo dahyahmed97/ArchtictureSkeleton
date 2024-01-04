@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -30,15 +31,15 @@ class AppLocalizations {
   Map<String, String> _localizedStrings = {};
 
   _fetchRemoteTranslation() async {
-    //  try {
-    //   DocumentSnapshot snapshot = await FirebaseFirestore.instance
-    //     .collection('localization')
-    //   .doc(locale.languageCode)
-    // .get();
-    //_remoteTranslation = snapshot.data() as Map<String, dynamic>;
-    //} catch (_) {
-    //_remoteTranslation = {};
-    // }
+     try {
+       DocumentSnapshot snapshot = await FirebaseFirestore.instance
+         .collection('localization')
+       .doc(locale.languageCode)
+     .get();
+    _remoteTranslation = snapshot.data() as Map<String, dynamic>;
+    } catch (_) {
+    _remoteTranslation = {};
+     }
   }
 
   _fetchLocalTranslation() async {
@@ -55,15 +56,19 @@ class AppLocalizations {
   Future<void> load() async {
     if (!_loadedLocally) {
       await Future.wait(<Future>[
-        _fetchLocalTranslation(),
-        //_fetchRemoteTranslation(),
+
+        _fetchRemoteTranslation(),
       ]);
 
-      // _localTranslation.addAll(_remoteTranslation);
+       _localTranslation.addAll(_remoteTranslation);
       _localizedStrings = _localTranslation.map((key, value) {
         return MapEntry(key, value.toString().replaceAll('\\n', '\n'));
       });
     } else {
+      _fetchLocalTranslation();
+      _localizedStrings = _localTranslation.map((key, value) {
+        return MapEntry(key, value.toString().replaceAll('\\n', '\n'));
+      });
       _localizedStrings = _localLocalizedStrings;
     }
   }
@@ -80,9 +85,6 @@ class AppLocalizations {
     return (_localizedStrings[key] ?? '').replaceAll("{$from}", to);
   }
 
-  /// Only use this in testing!
-  ///
-  /// Check out [fetchLocalEnTranslation]
   @visibleForTesting
   static void setLocalizedStrings(Map<String, String> strings) {
     _loadedLocally = true;

@@ -65,5 +65,5 @@ class SequenceCallViewModel extends Cubit<SequenceCallState> {
     });
   }
 
-  
+
 }
