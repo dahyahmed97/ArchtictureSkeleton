@@ -20,4 +20,5 @@ abstract class IRepository {
 
   Future<Either<Failure,GetEmpAllVacationsResponseModel>> getEmpAllVacations(
       GetEmpAllVacationsRequestModel getEmpAllVacationsRequestModel);
+
 }

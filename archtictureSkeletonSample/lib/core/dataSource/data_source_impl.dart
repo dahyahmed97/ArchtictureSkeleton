@@ -39,6 +39,7 @@ class DataSource extends IDataSource{
   Future<GetEmpAllVacationsResponseModel> getEmpAllVacations(GetEmpAllVacationsRequestModel getEmpAllVacationsRequestModel) async {
     var res = await networkClient.post(EndPoints.getEmpAllVacationRequests,auth: true,
         data:getEmpAllVacationsRequestModel.toJson());
+
     return GetEmpAllVacationsResponseModel.fromJson(res);
   }
 

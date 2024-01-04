@@ -21,3 +21,23 @@ extension EnumApiResult on ApiResult {
     }   return null;
   }
 }
+
+enum SequenceCalls{
+  call1,
+  call2,
+  call3
+}
+
+extension EnumSequenceCalls on SequenceCalls {
+  String? get text {
+    switch (this) {
+      case SequenceCalls.call1:
+        return "failed at call 1";
+      case SequenceCalls.call2:
+        return "failed at call 1";
+      case SequenceCalls.call3:
+        return "failed at call 1";
+
+    }   return null;
+  }
+}
