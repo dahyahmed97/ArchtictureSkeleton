@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:archtictureskeletonsample/core/preferences/keyCatalog.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
@@ -183,7 +184,7 @@ class Network implements INetwork {
       //  headers.addAll({"Authorization": await getVisitorToken()});
     } else if (auth) {
       PreferenceManager preferenceManager = PreferenceManager();
-      String? token = await preferenceManager.getBearerToken();
+      String? token = await preferenceManager.getData<String>(KeyCatalog.bearerToken);
       if (token != null) {
         headers.addAll({HttpHeaders.authorizationHeader: "Bearer $token"});
       }

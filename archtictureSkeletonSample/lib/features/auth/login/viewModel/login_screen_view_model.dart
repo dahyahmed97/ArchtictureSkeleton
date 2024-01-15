@@ -1,3 +1,4 @@
+import 'package:archtictureskeletonsample/core/preferences/keyCatalog.dart';
 import 'package:archtictureskeletonsample/core/preferences/preferences_manager.dart';
 import 'package:archtictureskeletonsample/core/repo/repo.dart';
 import 'package:archtictureskeletonsample/features/auth/login/models/login_request_model.dart';
@@ -20,7 +21,7 @@ class LoginScreenViewModel extends Cubit<LoginScreenState> {
       emit(LoginScreenErrorState(fail.message))
     }, (response) =>{
       if(response.code! == ApiResult.success.type){
-        _preferenceManager.saveBearerToken(response.jwtToken!),
+        _preferenceManager.saveData<String>(KeyCatalog.bearerToken, response.jwtToken!),
         emit(LoginSuccessState(response))
       }else{
         emit(LoginScreenErrorState(response.errorMessageContent!))
